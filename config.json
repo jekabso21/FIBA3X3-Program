@@ -5,7 +5,8 @@
       "apiKey": "YOUR_API_KEY_HERE",
       "requestId": "RANDOM_UUID",
       "eventId": "data-feed-test-8a741abd-43b8-4d02-b65d-8248967f0e7f", //This is ignored because code already generates random eventID
-      "fastUpdates": false
+      "fastUpdates": true
     },
-    "webSocketUrl": "Network_Interface_Websokcet_API_URL"
+    "webSocketUrl": "Network_Interface_Websokcet_API_URL",
+    "waitInterval": 100
 }

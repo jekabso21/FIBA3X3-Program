@@ -17,22 +17,24 @@ def load_config():
 
 config = load_config()
 
-# WebSocket URL provided by the Venue Server
 ws_url = config["webSocketUrl"]
 
-# Subscription message from the configuration file
 subscribe_message = {
     "apiName": "TvFeedApiV4",
     "apiCommand": "subscribe",
     "apiKey": config["subscription"]["apiKey"],
-    "requestId": str(uuid.uuid4()),  # Generate a random UUID
+    "requestId": str(uuid.uuid4()),
     "eventId": config["subscription"]["eventId"],
-    "fastUpdates": False
+    "fastUpdates": True
 }
+
+print(subscribe_message)
+
+wait_interval = config["waitInterval"] / 1000.0
 
 def on_message(ws, message):
     data = json.loads(message)
-    print("Received data:", data)
+    # print("Received data:", data)
     
     if "data" in data and "messageType" in data and data["messageType"] == "game-status-update":
         game_data = data["data"]
@@ -53,7 +55,7 @@ def on_message(ws, message):
                 }
                 
                 xml_data = convert_to_xml(formatted_data)
-                print(xml_data)
+                # print(xml_data)
                 save_to_file(xml_data)
             else:
                 print("Unexpected number of teams in the data.")
@@ -66,7 +68,11 @@ def on_close(ws, close_status_code, close_msg):
 
 def on_open(ws):
     print("Connection established")
-    ws.send(json.dumps(subscribe_message))
+    def send_subscription():
+        ws.send(json.dumps(subscribe_message))
+        threading.Timer(wait_interval, send_subscription).start()
+    
+    send_subscription()
 
 def convert_to_xml(data):
     root = ET.Element("root")
@@ -97,7 +103,7 @@ def convert_to_xml(data):
 def save_to_file(data):
     with open("data.xml", "w") as file:
         file.write(data)
-        print("Data saved to data.xml")
+        # print("Data saved to data.xml")
 
 def run_websocket():
     websocket.enableTrace(True)

@@ -1,5 +1,13 @@
 # Changelog
 
+## GUI version (branch `feature/gui`)
+
+- Added a **GUI version** of the app (`FIBA3X3-GUI.exe`) — a simple window to edit
+  the API Key, Event ID and WebSocket URL, save them to `config.json`, and see a
+  live connection/auth status.
+- This GUI version lives on the **`feature/gui`** branch, kept **separate from
+  `main`** (which has the console/CLI version).
+
 ## v1.1
 
 Turned the script into a reliable, double-clickable app for writing FIBA 3x3

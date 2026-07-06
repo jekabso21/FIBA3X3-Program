@@ -1,5 +1,5 @@
 """
-FIBA 3x3 Data Feed — simple GUI.
+FIBA 3x3 Data Feed - simple GUI.
 
 Lets the user edit the three things that change between events (API Key, Event ID,
 WebSocket URL), saves them to config.json, and shows a live status. Everything
@@ -68,9 +68,9 @@ def status_view(s):
     if s["auth"] == "failed" or s["connection"] == "error":
         return s["detail"], RED
     if s["auth"] == "ok":
-        return "Connected — receiving data", GREEN
+        return "Connected - receiving data", GREEN
     if s["connection"] == "connected":
-        return "Connected — authenticating...", ORANGE
+        return "Connected - authenticating...", ORANGE
     return "Connecting...", ORANGE
 
 

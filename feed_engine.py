@@ -4,7 +4,7 @@ FIBA 3x3 TV feed engine.
 Encapsulates the WebSocket connection to the FIBA TvFeedApiV4: subscribe once,
 retry authentication on rejection, parse the single game's status, and write it
 to data.xml. Exposes a thread-safe status snapshot (get_status) that a GUI can
-poll to show what's happening. No console/printing — this is meant to be driven
+poll to show what's happening. No console/printing - this is meant to be driven
 by a UI.
 """
 import json
@@ -113,7 +113,7 @@ class FeedEngine:
     def _on_open(self, ws):
         self._auth_attempts = 0
         self._set(connection="connected", auth="pending",
-                  detail="Connected — authenticating...")
+                  detail="Connected - authenticating...")
         self._safe_send(ws)
 
     def _on_error(self, ws, error):
@@ -122,7 +122,7 @@ class FeedEngine:
 
     def _on_close(self, ws, code, msg):
         if not self._stopping:
-            self._set(connection="connecting", detail="Disconnected — reconnecting...")
+            self._set(connection="connecting", detail="Disconnected - reconnecting...")
 
     def _on_message(self, ws, message):
         try:
@@ -144,7 +144,7 @@ class FeedEngine:
         if message_type in ("game-status-update", "event-data-update"):
             if self._auth() != "ok":
                 self._auth_attempts = 0
-                self._set(auth="ok", detail="Connected — receiving data")
+                self._set(auth="ok", detail="Connected - receiving data")
 
         if message_type == "game-status-update":
             self._process_game(data)
@@ -161,7 +161,7 @@ class FeedEngine:
             return
         if self._auth_attempts >= self.auth_max_retries:
             self._set(auth="failed",
-                      detail="Authentication failed — check API Key, Event ID and URL")
+                      detail="Authentication failed - check API Key, Event ID and URL")
             return
         self._auth_attempts += 1
         self._set(auth="pending", detail="Key rejected; retrying ({}/{})...".format(

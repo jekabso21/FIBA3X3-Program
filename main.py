@@ -48,7 +48,7 @@ auth_max_retries = 5       # how many re-auth attempts before giving up
 auth_retry_delay = 5.0     # seconds between re-auth attempts
 
 # Writer state. This tool tracks a SINGLE game, and writes data.xml directly from
-# the WebSocket thread the moment a change arrives — no polling timer — so the
+# the WebSocket thread the moment a change arrives - no polling timer - so the
 # file reflects the feed with the lowest possible latency.
 last_written_xml = None
 last_write_time = 0.0
@@ -129,7 +129,7 @@ def mark_authenticated():
         already = auth_ok
         auth_ok = True
     if not already:
-        log("Authentication successful — receiving live data.", color=GREEN)
+        log("Authentication successful - receiving live data.", color=GREEN)
 
 def on_message(ws, message):
     try:
@@ -212,7 +212,7 @@ def on_close(ws, close_status_code, close_msg):
 
 def heartbeat_loop():
     """Every 10s, report status. NOTE: this 10s cadence is only the logging
-    interval — data.xml itself is written far more often (see 'writes' below)."""
+    interval - data.xml itself is written far more often (see 'writes' below)."""
     while True:
         time.sleep(10)
         with stats_lock:
